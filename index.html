@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계좌 유형 확인기</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <style>
+        body {
+            font-family: 'Pretendard Variable', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+        select, input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        select {
+            max-width: 200px;
+        }
+        input {
+            flex: 1;
+            min-width: 150px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            flex: 0 1 100px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+        }
+        .info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .info a:hover {
+            text-decoration: underline;
+        }
+        .support-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .support-button:hover {
+            background-color: #218838;
+        }
+        .support-button:visited,
+        .support-button:link {
+            color: #fff;
+        }
+        .warning {
+            margin-top: 30px;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            select, input, button {
+                font-size: 14px;
+                flex: 1 100%;
+            }
+            label {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>계좌 유형 확인기</h1>
+        <p>은행을 선택하고 계좌번호를 입력하면 일반계좌인지 적금(저축)계좌인지 확인해줍니다.</p>
+        <form id="account-form">
+            <label for="bank">은행 선택</label>
+            <select id="bank" name="bank" required>
+                <option value="">은행을 선택하세요</option>
+                <option value="kb">KB국민은행</option>
+                <option value="sinhan">신한은행</option>
+                <option value="woori">우리은행</option>
+                <option value="hana">하나은행</option>
+                <option value="nh">NH농협은행(중앙회포함)</option>
+                <option value="sh">수협은행(중앙회포함)</option>
+                <option value="cu">신협중앙회</option>
+                <option value="ibk">IBK기업은행</option>
+                <option value="kdb">KDB산업은행</option>
+                <option value="kakao">카카오뱅크</option>
+                <option value="k">케이뱅크</option>
+                <option value="toss">토스뱅크</option>
+                <option value="kn">경남은행</option>
+                <option value="gj">광주은행</option>
+                <option value="dg">대구은행</option>
+                <option value="bs">부산은행</option>
+                <option value="jb">전북은행</option>
+                <option value="jj">제주은행</option>
+                <option value="ct">씨티은행</option>
+                <option value="sc">SC제일은행</option>
+                <option value="mg">MG새마을금고</option>
+                <option value="su">상호저축은행</option>
+            </select>
+            
+            <label for="account-number">계좌번호 입력</label>
+            <input type="text" id="account-number" name="account-number" required placeholder="계좌번호를 입력하세요">
+
+            <button type="submit">확인하기</button>
+        </form>
+
+        <div id="result"></div>
+
+        <div class="info">
+            <p>이 정보는 <a href="https://www.fss.or.kr/fss/bbs/B0000175/view.do?nttId=135252&menuNo=200204" target="_blank">금융감독원</a>과 <a href="https://www.cmsedi.or.kr/cms/board/workdata/view/989" target="_blank">금융결제원</a>의 자료를 바탕으로 만들었으며, 해당 기관 및 은행 상황에 따라 정보가 바뀔 수 있습니다. 참고용으로만 이용해 주세요.</p>
+            <p>사기계좌 여부가 궁금하다면 <a href="https://www.thecheat.co.kr" target="_blank">더치트</a> 웹사이트를 이용하거나, 토스 앱을 통해 송금하면 사전에 신고된 계좌인지 확인할 수 있습니다.</p>
+            <p>도움이 되었거나 질문이 있다면... <a href="https://toss.im" class="support-button" target="_blank">토스로 후원/질문하기</a></p>
+            <h3>중고거래할 때 주의해야 할 것!</h3>
+            <div class="warning">
+                <ul>
+                    <li>시세대비 지나치게 저렴하거나, 전국적으로 품귀인 품목을 다수 확보했다는 판매자를 주의</li>
+                    <li>거래 플랫폼을 활용할 경우 해당 사용자의 거래 내역이 충분한지 확인. </li>
+                    <li>거래 전 경찰청 ‘인터넷사기 의심전화·계좌번호 조회’, ‘더치트’ 등으로 판매자 전화·계좌번호의 사기 이력 확인 (사기 이력이 있으면 절대 거래를 피하고, 없더라도 무조건적인 신뢰는 금물)
+                    <li>직거래 가능 지역을 미리 고지하지 않거나 택배 거래만을 요구할 경우 주의. </li>
+                    <li>선불폰 및 가상계좌 사용 여부, 실명과 예금주의 성명 일치 여부, 구매자와 입금자의 실명 일치 여부 등을 확인하고, 나열된 사례에 해당할 경우 보다 각별히 주의하며 거래 필요
+                    <li>판매자가 ‘안전거래’를 종용하며 링크로 안전거래 URL(네이버페이 등)을 보내준 경우, 사기일 가능성이 높으니 주의</li>
+                    <li>거래 플랫폼별 이용자 신뢰도 관련 지표 (당근마켓 ‘온도’, 중고나라 ‘프로필’ 등)를 활용</li>
+                </ul>
+                <p>출처: 금융감독원 240401 자유적금계좌 악용 온라인 중고거래 사기 소비자경보 발령 보도자료</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('account-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var bank = document.getElementById('bank').value;
+            var accountNumber = document.getElementById('account-number').value.replace(/-/g, '');  // Remove hyphens
+            var resultDiv = document.getElementById('result');
+
+            function checkAccountType(bank, accountNumber) {
+                if (bank === 'kb') {
+                    if (accountNumber.length === 12 && accountNumber.substring(2, 4) === '21') {
+                        return '저축(적금)계좌';
+                    }
+                    if (accountNumber.length === 14 && ['03', '23', '26'].includes(accountNumber.substring(4, 6))) {
+                        return '저축(적금)계좌';
+                    }
+                } else if (bank === 'woori') {
+                    if (accountNumber.length === 13 && accountNumber.substring(4, 7) === '002') {
+                        return '저축(적금)계좌';
+                    }
+                } else if (bank === 'kakao') {
+                    if (accountNumber.length === 13 && accountNumber.substring(1, 4) === '979') {
+                        return '저축(적금)계좌';
+                    }
+                } else if (bank === 'su') {
+                    if (accountNumber.length === 14 && accountNumber.substring(3, 5) === '40') {
+                        return '가상계좌';
+                    }
+                }
+                return '일반계좌';
+            }
+
+            var accountType = checkAccountType(bank, accountNumber);
+            var accountTypeText = `이 계좌는 ${accountType === '일반계좌' ? '일반계좌인 것 같습니다.' : accountType === '가상계좌' ? '가상계좌입니다.' : '저축(적금)계좌입니다.'}`;
+            
+            resultDiv.innerHTML = "<p>" + accountTypeText + "</p>";
+        });
+    </script>
+</body>
+</html>
